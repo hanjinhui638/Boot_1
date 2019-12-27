@@ -14,7 +14,7 @@ import com.jh.head.Header;
 @SpringBootTest
 class ArmTest {
 
-	@Autowired
+	/*@Autowired
 	@Qualifier("left")
 	private Arm arm1;
 	
@@ -26,8 +26,8 @@ class ArmTest {
 	
 	@Test
 	void test() {
-		/* assertNotNull(arm1); */
+	
 		assertNotNull(header);
-	}
+	}*/
 
 }

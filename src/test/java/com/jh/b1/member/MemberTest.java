@@ -12,7 +12,7 @@ class MemberTest {
 	@Autowired
 	private MemberMapper memberMapper;
 
-	//@Test
+	/*@Test
 	void test() throws Exception{
 		MemberVO memberVO = new MemberVO();
 		memberVO.setId("iu");
@@ -34,6 +34,6 @@ class MemberTest {
 		
 		assertNotNull(memberVO);
 		
-	}
+	}*/
 
 }
