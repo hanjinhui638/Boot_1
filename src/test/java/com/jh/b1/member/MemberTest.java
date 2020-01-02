@@ -11,20 +11,22 @@ class MemberTest {
 	
 	@Autowired
 	private MemberMapper memberMapper;
-
-	/*@Test
-	void test() throws Exception{
+	
+	
+	@Test
+	public void memberJoinTest()throws Exception{
 		MemberVO memberVO = new MemberVO();
-		memberVO.setId("iu");
-		memberVO.setPw("iu");
-		memberVO.setName("iu");
-		memberVO.setEmail("iu@iu");
+		memberVO.setId("iu2");
+		memberVO.setPw("iu2");
+		memberVO.setName("iu2");
+		memberVO.setEmail("iu2@iu2");		
 		int result = memberMapper.memberJoin(memberVO);
-		
 		assertEquals(1, result);
 	}
 	
-	@Test
+
+
+	/*@Test
 	void loginTest()throws Exception{
 		MemberVO memberVO = new MemberVO();
 		memberVO.setId("iu");
