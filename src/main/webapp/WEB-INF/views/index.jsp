@@ -11,7 +11,8 @@
 <body>
 <c:import url="./template/nav.jsp"/>
 
-
-
+<div class = "container">
+	<img alt="오로라.png" src="./images/오로라1.png">
+</div>
 </body>
 </html>
