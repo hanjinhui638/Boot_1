@@ -8,9 +8,29 @@
 		insert into members values(#{id},#{pw}, #{name}, #{email})
 	</insert>
 
-	<select id="memberLogin" parameterType="com.jh.b1.member.MemberVO" resultType="com.jh.b1.member.MemberVO">
-		select * from members where id = #{id} and pw = #{pw}
+	
+	<resultMap type="com.jh.b1.member.MemberVO" id="Login">
+		<id property="id" column="id"></id>
+		<result property="pw" column="pw"/>
+		<result property="name" column="name"/>
+		<result property="email" column="email"/>
+		<association property="memberFilesVO" javaType="com.jh.b1.member.MemberFilesVO">
+			<id property="fnum" column="fnum"/>
+			<result property="fname" column="fname"/>
+			<result property="oname" column="oname"/>
+		</association>
+	
+	</resultMap>
+	
+<select id="memberLogin" parameterType="com.jh.b1.member.MemberVO" resultMap="Login">
+	<!-- select * from members where id = #{id} and pw = #{pw} -->		
+		select M.*,F.*
+		from members M inner join memberFiles F
+		on M.id = F.id
+		where M.id=#{id} and M.pw=#{pw}
 	</select>
+
+
 
 </mapper>	  
 

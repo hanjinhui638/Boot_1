@@ -24,6 +24,7 @@ public class FilePathGenerator {
 		//classpath 경로를 받아오기 위해 사용 
 		//시작경로의 classpath문구를 생략 
 		//나머지는 ResourceLoader와 같음 
+		
 		String path = "/static/";
 		ClassPathResource classPathResource = new ClassPathResource(path);
 		
@@ -37,6 +38,7 @@ public class FilePathGenerator {
 		
 		return file;
 	}
+	
 	
 	public File getUseResourceLoader(String filePath)throws Exception{
 		String path = "classpath:/static/";
@@ -63,7 +65,7 @@ public class FilePathGenerator {
 	
 	
 	public File getuseServletContext(String filePath) {
-		String file = servletContext.getRealPath("upload");
+		String files = servletContext.getRealPath(filePath);
 		File file = new File(files);
 		if(!file.exists()) {
 			file.mkdirs();

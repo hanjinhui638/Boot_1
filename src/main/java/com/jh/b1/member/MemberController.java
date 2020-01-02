@@ -1,5 +1,7 @@
 package com.jh.b1.member;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,26 @@ public class MemberController {
 
 	@Autowired
 	private MemberService memberService;
+	
+	@GetMapping("memberFileDown")
+	public ModelAndView memberfileDown(MemberFilesVO memberFilesVO)throws Exception{
+		ModelAndView mv = new ModelAndView();
+		memberFilesVO = memberService.memberfilesSelect(memberFilesVO);
+		if(memberFilesVO !=null) {
+			mv.addObject("memberfiles", memberFilesVO);
+			mv.addObject("path", "upload");
+			mv.setViewName("fileDown");
+			/* 클래스 이름의 첫글자를 소문자로 바꾼 이름 */
+			
+		}else {
+			mv.addObject("message", "No Image File");
+			mv.addObject("path", "./memberPage");
+			mv.setViewName("common/result");
+			
+		}
+		
+		return mv;
+	}
 	
 	@GetMapping("memberJoin")
 	public String memberJoin()throws Exception{
@@ -38,6 +60,45 @@ public class MemberController {
 		mv.addObject("path", path);
 		return mv;
 		
+	}
+	
+	
+	
+	@GetMapping("memberLogin")
+	public void memberLogin()throws Exception{
+		
+	}
+	
+	
+	@PostMapping("memberLogin")
+	public ModelAndView memberLogin(MemberVO memberVO, HttpSession session,MemberFilesVO memberFilesVO)throws Exception{
+		ModelAndView mv = new ModelAndView();
+		memberVO = memberService.memberLogin(memberVO);
+		memberFilesVO = memberService.memberfilesSelect(memberFilesVO);
+		
+		String message ="Login Fail";
+		
+		if(memberVO !=null) {
+			message = "Login Success";
+			session.setAttribute("member", memberVO);
+			session.setAttribute("file", memberFilesVO);
+		}
+		mv.setViewName("common/result");
+		mv.addObject("message", message);
+		mv.addObject("path","../");
+		return mv;
+	
+	}
+	
+	@GetMapping("memberPage")
+	public void memberPage()throws Exception{
+			
+	}
+	
+	@GetMapping("memberLogout")
+	public String memberLogout(HttpSession session)throws Exception{
+		session.invalidate();
+		return "redirect:../";
 	}
 	
 }

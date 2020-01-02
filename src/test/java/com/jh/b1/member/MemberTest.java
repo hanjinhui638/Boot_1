@@ -5,8 +5,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
+@Transactional
+@Rollback
 class MemberTest {
 	
 	@Autowired
@@ -16,10 +20,10 @@ class MemberTest {
 	@Test
 	public void memberJoinTest()throws Exception{
 		MemberVO memberVO = new MemberVO();
-		memberVO.setId("iu2");
-		memberVO.setPw("iu2");
-		memberVO.setName("iu2");
-		memberVO.setEmail("iu2@iu2");		
+		memberVO.setId("iu12");
+		memberVO.setPw("iu12");
+		memberVO.setName("iu12");
+		memberVO.setEmail("iu12@iu12");		
 		int result = memberMapper.memberJoin(memberVO);
 		assertEquals(1, result);
 	}

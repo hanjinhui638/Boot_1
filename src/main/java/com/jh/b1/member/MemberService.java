@@ -6,12 +6,14 @@ import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jh.b1.util.FilePathGenerator;
 import com.jh.b1.util.FileSaver;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class MemberService {
 
 	@Autowired
@@ -24,21 +26,48 @@ public class MemberService {
 	private FilePathGenerator filePathGenerator;
 	
 	@Autowired
+	private MemberFilesMapper memberFilesMapper;
+	
+	@Autowired
 	private FileSaver fileSaver;
 	
+	
+	//@Transactional
 	public int memberJoin(MemberVO memberVO, MultipartFile files)throws Exception{
+			
+		 // String filePath = servletContext.getRealPath("upload");
+		 //System.out.println(filePath);		 	
+		// filePathGenerator.getUseResourceLoader(); 
 		
-		/*
-		 * String filePath = servletContext.getRealPath("upload");
-		 * System.out.println(filePath);
-		 */
-		
-		/* filePathGenerator.getUseResourceLoader(); */
 		
 		File file = filePathGenerator.getUseClassPathResource("upload");
 		String fileName = fileSaver.save(file, files);
 		System.out.println(fileName);
 		
-		return 0; //memberMapper.memberJoin(memberVO);
+		int result = memberMapper.memberJoin(memberVO);
+		MemberFilesVO memberFilesVO = new MemberFilesVO();
+		memberFilesVO.setId(memberVO.getId());
+		memberFilesVO.setFname(fileName);
+		memberFilesVO.setOname(files.getOriginalFilename());
+		result = memberFilesMapper.memberfilesInsert(memberFilesVO);
+		
+		return result; //memberMapper.memberJoin(memberVO);
 	}
-}
+	
+	public MemberVO memberLogin(MemberVO memberVO)throws Exception{
+		
+		return memberMapper.memberLogin(memberVO);
+		
+	}
+	
+	public MemberFilesVO memberfilesSelect(MemberFilesVO memberFilesVO)throws Exception{
+		
+		return memberFilesMapper.memberfilesSelect(memberFilesVO);
+	}
+	
+	
+	
+	}
+	
+	
+
