@@ -1,12 +1,17 @@
 package com.jh.b1.member;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -39,14 +44,24 @@ public class MemberController {
 	
 	@GetMapping("memberJoin")
 	public String memberJoin()throws Exception{
+		//MemberVO memberVO new MemberVO();
+		//model.addAttribute("memberVO", memberVO);
+		//model.addAttribute("memberVO", new MemberVO());
 		return "member/memberJoin";
 	}
 	
 	
 	@PostMapping("memberJoin")
-	public ModelAndView memberJoin(MemberVO memberVO, MultipartFile files)throws Exception{
-														/* 파라미터와 동일하게 */
+	public ModelAndView memberJoin(@Valid MemberVO memberVO, BindingResult bindingResult, MultipartFile files)throws Exception{
+								/* bindingResult의 위치는 @Valid 바로 뒤  검증하고 옴*/							/* 파라미터와 동일하게 */
 		ModelAndView mv = new ModelAndView();
+		
+		if(memberService.memberJoinValidate(memberVO, bindingResult)){
+		
+		mv.setViewName("member/memberJoin");
+		}else {		
+			
+			
 		int result = memberService.memberJoin(memberVO, files);
 		
 		String message = "Join Fail";
@@ -58,6 +73,7 @@ public class MemberController {
 		mv.setViewName("common/result");
 		mv.addObject("message",message);
 		mv.addObject("path", path);
+		}
 		return mv;
 		
 	}
@@ -70,8 +86,17 @@ public class MemberController {
 	}
 	
 	
+	@ModelAttribute
+	public MemberVO getMemberVO()throws Exception{
+		//모든 메서드의 MemberVO를 Model에 담음 
+		//MemberVO memberVO new MemberVO();
+		//model.addAttribute("memberVO", memberVO);
+		return new MemberVO();
+	}
+	
+	
 	@PostMapping("memberLogin")
-	public ModelAndView memberLogin(MemberVO memberVO, HttpSession session,MemberFilesVO memberFilesVO)throws Exception{
+	public ModelAndView memberLogin( MemberVO memberVO, HttpSession session,MemberFilesVO memberFilesVO)throws Exception{
 		ModelAndView mv = new ModelAndView();
 		memberVO = memberService.memberLogin(memberVO);
 		memberFilesVO = memberService.memberfilesSelect(memberFilesVO);

@@ -8,12 +8,13 @@
 <!-- autoincrement null or 0 -->
 
 	<insert id="memberfilesInsert" parameterType="com.jh.b1.member.MemberFilesVO">
-		insert into memberFiles(id, fname, oname) value(#{id}, #{fname}, #{oname});
+		insert into memberFiles(id, fname, oname) values(#{id}, #{fname}, #{oname});
 	</insert>
 
 	<select id="memberfilesSelect" resultType="com.jh.b1.member.MemberFilesVO" parameterType="com.jh.b1.member.MemberFilesVO">
 		select * from memberFiles where fnum=#{fnum}
 	</select>
+
 
 
 
