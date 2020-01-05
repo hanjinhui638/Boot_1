@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jh.b1.util.FilePathGenerator;
@@ -24,6 +25,16 @@ public class NoticeService {
 	@Autowired
 	private FileSaver fileSaver;
 	
+	/*public boolean noticeWriteValidate(NoticeVO noticeVO, BindingResult bindingResult)throws Exception{
+		boolean check = false;
+		
+		if(bindingResult.hasErrors()) {
+			check = true;
+		}
+		
+		return check;
+	}*/
+	
 	public int noticeWrite(NoticeVO noticeVO, MultipartFile files)throws Exception{
 		
 		File file = filePathGenerator.getUseClassPathResource("upload");
@@ -38,5 +49,6 @@ public class NoticeService {
 		
 		return result;
 	}
+	
 
 }

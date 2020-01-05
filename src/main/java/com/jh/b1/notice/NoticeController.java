@@ -1,8 +1,12 @@
 package com.jh.b1.notice;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +21,12 @@ public class NoticeController {
 	@Autowired
 	private NoticeService noticeService;
 	
+	@ModelAttribute
+	public NoticeVO getNoticeVO()throws Exception{
+		return new NoticeVO();
+	}
+
+	
 	@GetMapping("noticeWrite")
 	public String noticeWrite()throws Exception{
 		
@@ -24,9 +34,10 @@ public class NoticeController {
 	}
 
 	@PostMapping("noticeWrite")
-	public ModelAndView noticeWrite(NoticeVO noticeVO, MultipartFile files)throws Exception{
+	public ModelAndView noticeWrite(@Valid NoticeVO noticeVO, MultipartFile files)throws Exception{
 		
 		ModelAndView mv = new ModelAndView();
+		
 		
 		int result = noticeService.noticeWrite(noticeVO, files);
 		
@@ -42,5 +53,7 @@ public class NoticeController {
 		return mv;
 		
 	}
+	
+	
 	
 }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,16 +14,19 @@
 
 <div class="container">
 	  <h2>Notice Write</h2>
-	  <form action="./noticeWrite" method="post" enctype="multipart/form-data">
+	  <form:form action="./noticeWrite" modelAttribute="noticeVO" method="post" enctype="multipart/form-data">
 	  	
 	    <div class="form-group">
 	      <label for="title">Title:</label>
-	      <input type="text" class="form-control" id="title" placeholder="Enter title" name="title">
+	 <!--      <input type="text" class="form-control" id="title" placeholder="Enter title" name="title"> -->
+	      <form:input path="title" class="form-control" id="title" placeholder="Enter title"/>
+	      <form:errors path="title"/>
 	    </div>
 	    
 	    <div class="form-group">
 	      <label for="writer">Writer:</label>
-	      <input type="text" class="form-control" id="writer" placeholder="Enter Writer" name="writer">
+	      <form:input path="writer" class="form-control" id="writer" placeholder="Enter Writer"/>
+	      <form:errors path="writer"/>
 	    </div>
 	    
 	    <div class="form-group">
@@ -37,7 +41,7 @@
 	    
 	    
 	     <button class="btn btn-info">Submit</button>
-	    </form>
+	    </form:form>
 	</div>
 
 
