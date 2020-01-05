@@ -2,7 +2,11 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jh.b1.member.NoticeMapper">
+<mapper namespace="com.jh.b1.notice.NoticeFilesMapper">
+
+<insert id="noticefilesInsert" parameterType="com.jh.b1.notice.NoticeFilesVO">
+	insert into noticeFiles(num, fname, oname) values(#{num},#{fname}, #{oname})
+</insert>
 
 
 </mapper>	  
