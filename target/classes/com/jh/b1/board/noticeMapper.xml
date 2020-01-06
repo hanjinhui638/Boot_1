@@ -7,9 +7,9 @@
 <mapper namespace="com.jh.b1.board.NoticeMapper">
 	<sql id = "bs">
 		<choose>
-			<when test = "kind == 'kt'">
+			<when test = "kind == 'kT'">
 				where title like CONCAT('%',#{search},'%')</when>
-			<when test = "kind == 'kw'">
+			<when test = "kind == 'kW'">
 			where writer like CONCAT('%',#{search},'%')</when>
 			<otherwise>
 			where contents like CONCAT('%', #{search},'%')
@@ -45,9 +45,24 @@
 
 
 <select id="boardList" resultType="com.jh.b1.board.NoticeVO" parameterType="com.jh.b1.util.Pager">
-	select * from notice
-	where num>0 
-	order by num desc limit #{startRow}, ${perPage}
+<!-- 	select * from notice	
+	where num > 0 
+	order by num desc limit #{startRow}, ${perPage} -->
+	
+	select N.* from(select * from notice 
+			<choose>
+				<when test="kind == 'kT'">
+					where title like concat('%',#{search},'%')
+				</when>
+				<when test="kind == 'kW'">
+					where contents like concat('%',#{search},'%')
+				</when>
+				<otherwise>
+					where writer like concat('%',#{search},'%')
+				</otherwise>
+			</choose>
+		order by num desc) N limit #{startRow},${perPage}
+	
 	
 	<!-- where num>0 index를 주기 떄문에 속도가 빠름-->
 </select>
@@ -56,6 +71,7 @@
 
 <select id="boardCount" resultType="java.lang.Integer" parameterType="com.jh.b1.util.Pager">
 	select count(num) from notice
+	<include refid="bs"></include>
 	
 </select>
 

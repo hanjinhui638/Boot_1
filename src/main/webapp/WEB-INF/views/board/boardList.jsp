@@ -50,6 +50,20 @@
 			
 		</c:if>
 	</div>
+	
+	<div> <!-- 검색창 -->
+	  		<form id="frm" action="./${board}List">
+	  			<input type="hidden" id="curPage" value="1" name="curPage">
+	  			<select name="kind">
+	  				<option id="kT" value="kT">Title</option>
+	  				<option id="kW" value="kW">Writer</option>
+	  				<option id="kC" value="kC">Contents</option>
+	  			</select>
+	  			
+	  			<input type="text" name="search" value="${pager.search}">
+	  			<button>Search</button>
+	  		</form>
+	  	</div>
 
 
 </div>
@@ -57,8 +71,14 @@
 
 
 	<script type="text/javascript">
-		${".list"}.click(function(){
-			$("#curPage").val($this).attr("id"));
+	 	var kind = '${pager.kind}';
+		if(kind == ''){
+				kind = "kT";
+			}
+		$("#"+kind).prop("selected", true);
+	
+		$('.list').click(function(){
+			$("#curPage").val($(this).attr("id"));
 			$("#frm").sumit();
 			
 			});

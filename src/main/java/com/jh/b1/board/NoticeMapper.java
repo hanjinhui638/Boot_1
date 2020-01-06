@@ -17,4 +17,6 @@ public interface NoticeMapper {
 	public java.util.List<NoticeVO> boardList(Pager pager)throws Exception;
 	
 	public int boardCount(Pager pager)throws Exception;
+	
+	public NoticeVO noticeSelect(NoticeVO noticeVO)throws Exception;
 }

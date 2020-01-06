@@ -17,6 +17,7 @@ public class NoticeVO {
 	private Date regDate;
 	private int hit;
 	
+	
 	private List<NoticeFilesVO> files;
 	
 	

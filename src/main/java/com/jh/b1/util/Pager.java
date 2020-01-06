@@ -11,6 +11,9 @@ public class Pager {
 	private Integer startNum;
 	private Integer lastNum;
 	
+	private String kind;
+	private String search;
+	
 	public void makeStartRow() {
 		this.startRow = (this.getCurPage()-1)*this.getPerPage();
 		
@@ -94,6 +97,25 @@ public class Pager {
 	public void setLastNum(Integer lastNum) {
 		this.lastNum = lastNum;
 	}
+
+	public String getKind() {
+		return kind;
+	}
+
+	public void setKind(String kind) {
+		this.kind = kind;
+	}
+
+	public String getSearch() {
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
+	
+	
+	
 	
 
 
