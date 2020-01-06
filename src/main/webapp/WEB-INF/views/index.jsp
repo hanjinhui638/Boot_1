@@ -31,7 +31,7 @@
 		</h1>
 
 		<div class="container">
-			<img alt="오로라.png" src="./images/오로라1.png">
+			<img alt="I-MOgAFLmMFyc9af7pvMNsNo6CNQ.jpg" src="./images/I-MOgAFLmMFyc9af7pvMNsNo6CNQ.jpg">
 		</div>
 		<h1>${t}</h1>
 	</div>

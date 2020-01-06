@@ -1,4 +1,4 @@
-package com.jh.b1.notice;
+package com.jh.b1.board;
 
 public class NoticeFilesVO {
 	

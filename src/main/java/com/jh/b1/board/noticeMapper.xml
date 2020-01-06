@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jh.b1.board.NoticeMapper">
+
+<insert id="boardWrite" parameterType="com.jh.b1.board.NoticeVO" useGeneratedKeys="true" keyProperty="num">
+<!-- <selectKey>
+ useGeneratedKeys="true" keyProperty="num"
+</selectKey> -->
+
+	insert into notice values(#{num}, #{title}, #{writer}, #{contents}, now(),0)
+</insert>
+
+
+<select id="boardList" resultType="com.jh.b1.board.NoticeVO">
+	select * from notice 
+	
+	where num>0 
+	
+	order by num desc limit 0, 10
+	
+	<!-- where num>0 index를 주기 떄문에 속도가 빠름-->
+</select>
+
+</mapper>	  
+
+ 

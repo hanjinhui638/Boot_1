@@ -1,4 +1,4 @@
-package com.jh.b1.notice;
+package com.jh.b1.board;
 
 import java.sql.Date;
 
@@ -15,6 +15,7 @@ public class NoticeVO {
 	private String contents;
 	private Date regDate;
 	private int hit;
+	
 	public int getNum() {
 		return num;
 	}
