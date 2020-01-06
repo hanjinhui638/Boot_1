@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.jh.b1.util.FilePathGenerator;
 import com.jh.b1.util.FileSaver;
+import com.jh.b1.util.Pager;
 
 
 @Service
@@ -64,8 +65,12 @@ public class NoticeService {
 	}
 	
 	
-	public List<NoticeVO> boardList()throws Exception{
-		return noticeMapper.boardList();
+	public List<NoticeVO> boardList(Pager pager)throws Exception{
+		int totalCount = noticeMapper.boardCount(pager);
+		pager.makePage(totalCount);
+		pager.makeStartRow();
+		
+		return noticeMapper.boardList(pager);
 		
 	}
 	

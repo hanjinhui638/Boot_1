@@ -2,7 +2,38 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
 <mapper namespace="com.jh.b1.board.NoticeMapper">
+	<sql id = "bs">
+		<choose>
+			<when test = "kind == 'kt'">
+				where title like CONCAT('%',#{search},'%')</when>
+			<when test = "kind == 'kw'">
+			where writer like CONCAT('%',#{search},'%')</when>
+			<otherwise>
+			where contents like CONCAT('%', #{search},'%')
+			</otherwise>
+		
+		</choose>
+	
+	</sql>
+	
+<resultMap type="com.jh.b1.board.NoticeVO" id="selectResult">
+		<id column="num" property="num"/>
+		<result column="title" property="title"/>
+		<result column="writer" property="writer"/>
+		<result column="contents" property="contents"/>
+		<result column="regDate" property="regDate"/>
+		<result column="hit" property="hit"/>
+		<collection property="noticeFiles" javaType="java.util.ArrayList" ofType="com.jh.b1.board.NoticeFilesVO">
+			<id column="fnum" property="fnum"/>
+			<result column="num" property="num"/>
+			<result column="fname" property="fname"/>
+			<result column="oname" property="oname"/>
+		</collection>
+	</resultMap>
+
 
 <insert id="boardWrite" parameterType="com.jh.b1.board.NoticeVO" useGeneratedKeys="true" keyProperty="num">
 <!-- <selectKey>
@@ -13,15 +44,30 @@
 </insert>
 
 
-<select id="boardList" resultType="com.jh.b1.board.NoticeVO">
-	select * from notice 
-	
+<select id="boardList" resultType="com.jh.b1.board.NoticeVO" parameterType="com.jh.b1.util.Pager">
+	select * from notice
 	where num>0 
-	
-	order by num desc limit 0, 10
+	order by num desc limit #{startRow}, ${perPage}
 	
 	<!-- where num>0 index를 주기 떄문에 속도가 빠름-->
 </select>
+
+
+
+<select id="boardCount" resultType="java.lang.Integer" parameterType="com.jh.b1.util.Pager">
+	select count(num) from notice
+	
+</select>
+
+
+
+<select id = "boardSelect" parameterType="com.jh.b1.board.NoticeVO" resultMap="selectResult">
+	select N.*, F.* from notice N full join noticeFiles F
+	on N.num = F.num
+	where N.num = #{num}
+</select>
+
+
 
 </mapper>	  
 

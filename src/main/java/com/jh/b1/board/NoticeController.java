@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jh.b1.member.MemberService;
+import com.jh.b1.util.Pager;
 
 @Controller
 @RequestMapping("/notice/**")
@@ -82,11 +83,12 @@ public class NoticeController {
 	}
 	
 	@GetMapping("noticeList")
-	public ModelAndView noticeList()throws Exception{
-		ModelAndView mv = new ModelAndView();
+	public ModelAndView noticeList(Pager pager)throws Exception{
 		
-		List<NoticeVO> ar = noticeService.boardList();
+		ModelAndView mv = new ModelAndView();
+		List<NoticeVO> ar = noticeService.boardList(pager);
 		mv.addObject("list", ar);
+		mv.addObject("pager", pager);
 		mv.setViewName("board/boardList");
 		
 		return mv;
